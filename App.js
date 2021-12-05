@@ -1,21 +1,81 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import React, { useState } from "react";
+import { SafeAreaView, StyleSheet, FlatList, Text, Alert } from "react-native";
+import { Header } from "./src/Header";
+import { TodoForm } from "./src/TodoForm";
+import { TodoList } from "./src/TodoList";
 
 export default function App() {
+  const [todos, setTodos] = useState([]);
+
+  const addTodo = (title) => {
+    let repeatTodo = todos.some((todo) => todo.title === title);
+    if (!repeatTodo) {
+      setTodos((prev) => [
+        {
+          id: new Date().getTime().toString(),
+          title,
+          date: new Date().toLocaleTimeString(),
+          status: true,
+          edit: false,
+        },
+        ...prev,
+      ]);
+    } else {
+      Alert.alert("Название задачи не может повторяться");
+    }
+  };
+
+  const deleteTodo = (id) => {
+    Alert.alert("Вы уверены?", "Удалить?", [
+      {
+        text: "Нет",
+        style: "cancel",
+      },
+      {
+        text: "Да",
+        onPress: () =>
+          setTodos((prev) => prev.filter((todo) => todo.id !== id)),
+      },
+    ]);
+  };
+
+  const statusTodo = (id) => {
+    let newTodo = [...todos].filter((todo) => {
+      if (todo.id === id) {
+        todo.status = !todo.status;
+      }
+      return todo;
+    });
+    setTodos(newTodo);
+  };
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+    <SafeAreaView style={styles.container}>
+      <Header todo={todos} />
+      <TodoForm onTodo={addTodo} />
+      {todos.length !== 0 ? (
+        <FlatList
+          data={todos}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <TodoList todo={item} onRemove={deleteTodo} onStatus={statusTodo} />
+          )}
+        />
+      ) : (
+        <Text>Задачи отсутствуют в списке</Text>
+      )}
+
       <StatusBar style="auto" />
-    </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "flex-start",
   },
 });
