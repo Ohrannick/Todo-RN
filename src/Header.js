@@ -1,28 +1,29 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import styled from "styled-components/native";
+// import { View, Text, StyleSheet } from "react-native";
+
+const HeaderView = styled.View`
+  align-items: center;
+`;
+
+const HeaderText = styled.Text`
+  font-size: 24px;
+  color: #3949ab;
+`;
 
 export const Header = ({ todo }) => {
   return (
-    <View style={s.header}>
-      <Text style={s.text}>Список задач: {todo.length}</Text>
-    </View>
+    <HeaderView>
+      <HeaderText>Список задач: {todo.length}</HeaderText>
+    </HeaderView>
   );
 };
 
-const s = StyleSheet.create({
-  header: {
-    alignItems: "flex-start",
-    // backgroundColor: "rgb(114, 172, 172)",
-    // height: 50,
-    // fontSize: 22,
-    // fontWeight: "bold",
-    // alignItems: "center",
-    // justifyContent: "center",
-    // marginTop: 20,
-    // marginBottom: 20,
-    // borderRadius: 15,
-  },
-  text: {
-    fontSize: 24,
-  },
-});
+// const s = StyleSheet.create({
+//   header: {
+//     alignItems: "flex-start",
+//   },
+//   text: {
+//     fontSize: 24,
+//   },
+// });

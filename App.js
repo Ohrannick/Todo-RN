@@ -26,8 +26,8 @@ export default function App() {
     }
   };
 
-  const deleteTodo = (id) => {
-    Alert.alert("Вы уверены?", "Удалить?", [
+  const deleteTodo = (id, title) => {
+    Alert.alert("Удалить задачу?", title, [
       {
         text: "Нет",
         style: "cancel",

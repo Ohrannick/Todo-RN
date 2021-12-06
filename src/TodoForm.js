@@ -22,7 +22,7 @@ export const TodoForm = ({ onTodo }) => {
         onChangeText={setValue}
         value={value}
         autoFocus={true}
-        autoCapitalize="none"
+        autoCorrect={true}
       />
       <Button style={s.btn} title="Добавить" onPress={pressButton} />
     </View>
@@ -41,27 +41,7 @@ const s = StyleSheet.create({
     padding: 10,
     borderStyle: "solid",
     borderBottomWidth: 2,
+    fontSize: 16,
   },
   btn: {},
 });
-
-// const saveTodo = () => {
-//   let repeatTodo = todo.some((item) => item.title === value);
-//   if (repeatTodo) {
-//     setPlholder("---- Введите уникальную задачу ----");
-//   } else if (value && !repeatTodo) {
-//     setTodo(
-//       [
-//         ...todo,
-//         {
-//           id: new Date().getTime(),
-//           title: value,
-//           date: new Date().toLocaleTimeString(),
-//           status: true,
-//         },
-//       ],
-//       setPlholder("Введите наименование задачи...")
-//     );
-//   }
-//   setValue("");
-// };
